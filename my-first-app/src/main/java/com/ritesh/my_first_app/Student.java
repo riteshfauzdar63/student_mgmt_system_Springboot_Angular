@@ -1,11 +1,25 @@
 package com.ritesh.my_first_app;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+@Entity
+@Table(name="students")
 public class Student {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotBlank(message="Course is required")
     private String course;
+
+    @NotBlank(message = "Name is required")
     private String name;
 
-    public Student(int id, String course, String name) {
+    public Student(){}
+
+    public Student(Integer id, String course, String name) {
         this.id = id;
         this.course = course;
         this.name = name;
@@ -15,7 +29,7 @@ public class Student {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id = id;
     }
 
