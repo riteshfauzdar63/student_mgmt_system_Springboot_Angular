@@ -35,12 +35,13 @@ public class StudentController {
 
 //    Put- Update
     @PutMapping("/students/{id}")
-    public Student updateStudent(@PathVariable int id, @RequestBody Student updated){
+    public StudentDTO updateStudent(@PathVariable int id, @Valid @RequestBody StudentDTO updated){
         Student existing = studentRepository.findById(id).orElse(null);
         if(existing != null){
            existing.setName(updated.getName());
            existing.setCourse(updated.getCourse());
-           return studentRepository.save(existing);
+           Student saved = studentRepository.save(existing);
+           return new StudentDTO(saved.getId(), saved.getName(), saved.getCourse());
         }
 
         return null;
