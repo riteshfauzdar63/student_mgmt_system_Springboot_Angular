@@ -23,14 +23,17 @@ public class StudentController {
 
 //    Get one by id
     @GetMapping("/students/{id}")
-    public Student getStudent(@PathVariable int id){
-        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+    public StudentDTO getStudent(@PathVariable int id){
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        return new StudentDTO(student.getId(), student.getName(), student.getCourse());
     }
 
 //    Post - create
     @PostMapping("/students")
-    public Student addStudent(@Valid @RequestBody Student student){
-        return studentRepository.save(student);
+    public StudentDTO addStudent(@Valid @RequestBody StudentDTO dto){
+        Student student = new Student(null, dto.getName(), dto.getCourse());
+        Student save = studentRepository.save(student);
+        return new StudentDTO(save.getId(), save.getName(), save.getCourse());
     }
 
 //    Put- Update
