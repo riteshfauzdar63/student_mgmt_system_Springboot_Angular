@@ -17,8 +17,15 @@ public class StudentController {
 
 //    get all
     @GetMapping("/students")
-    public List<Student> getAllStudents(){
-        return studentRepository.findAll();
+    public List<StudentDTO> getAllStudents(){
+        List<Student> students = studentRepository.findAll();
+        List <StudentDTO> dtoList = new ArrayList<>();
+
+        for(Student student : students){
+            dtoList.add(new StudentDTO(student.getId(),student.getName(),student.getCourse()));
+        }
+
+        return dtoList;
     }
 
 //    Get one by id
