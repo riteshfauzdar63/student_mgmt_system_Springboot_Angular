@@ -1,2 +1,3 @@
 # my-first-java-app
-this is for learning springboot application
+this is a springboot application tht tracks the student and their data using postgres sprigboot. 
+Learning and applying all concepts in springboot
