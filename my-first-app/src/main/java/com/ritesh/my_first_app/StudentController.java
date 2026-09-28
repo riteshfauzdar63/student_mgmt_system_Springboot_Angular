@@ -9,8 +9,10 @@ import java.util.*;
 public class StudentController {
 
     private final StudentRepository studentRepository;
-    public StudentController(StudentRepository studentRepository){
+    private final StudentMapper studentDataMapper;
+    public StudentController(StudentRepository studentRepository, StudentMapper studentDataMapper){
         this.studentRepository = studentRepository;
+        this.studentDataMapper = studentDataMapper;
     }
 
 //    private final List<Student> students = new ArrayList<>();
@@ -37,10 +39,12 @@ public class StudentController {
 
 //    Post - create
     @PostMapping("/students")
-    public StudentDTO addStudent(@Valid @RequestBody StudentDTO dto){
-        Student student = new Student(null, dto.getName(), dto.getCourse());
+    public StudentResponseDTO addStudent(@Valid @RequestBody StudentDTO dto){
+//        Student student = new Student(null, dto.getName(), dto.getCourse());
+        Student student = studentDataMapper.requestMapping(dto);
         Student save = studentRepository.save(student);
-        return new StudentDTO(save.getId(), save.getName(), save.getCourse());
+        return studentDataMapper.responseMapping(save);
+
     }
 
 //    Put- Update
@@ -63,4 +67,5 @@ public class StudentController {
         studentRepository.deleteById(id);
         return "Deleted student with id " + id ;
     }
+
 }
